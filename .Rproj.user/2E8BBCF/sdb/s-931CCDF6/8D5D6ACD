@@ -1,0 +1,19 @@
+{
+    "contents" : "\nlibrary(shiny)\nlibrary(shinyapps)\nlibrary(caret)\nlibrary(party)\nlibrary(randomForest)\ndata1<-read.csv(\"Data.csv\")\ntrain1<-train(Volume~Temperature+Humidity+Shop, data = data1, method=\"rf\")\nnewdata<-read.csv(\"newdata.csv\")\nshinyServer(\n  function(input,output){\n    predicted<-reactive({\n      output$inputValue<-renderPrint({input$Humidity})\n      output$inputValue<-renderPrint({input$Temperature})\n      output$inputValue<-renderPrint({input$ShopStatus})\n      newdata$Temperature<-input$Temperature\n      newdata$Humidity<-input$Humidity\n      newdata$Shop<-input$Shop\n      predict(train1, newdata=newdata)\n    })\n      output$Prediction<-renderPrint({paste(predicted())})\n  }\n)\n",
+    "created" : 1448204400816.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1195919164",
+    "id" : "8D5D6ACD",
+    "lastKnownWriteTime" : 1448211196,
+    "path" : "~/GitHub/09_DevelopingDataProducts/server.r",
+    "project_path" : "server.r",
+    "properties" : {
+        "notebook_format" : "html_document",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

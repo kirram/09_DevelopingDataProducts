@@ -1,0 +1,49 @@
+---
+title: "Developing Data Products"
+author: "Kirram"
+date: "November 21, 2015"
+output: html_document
+---
+Disclaimer: this model was made up and does not repredsent real trends. 
+
+The fields in the  allow a business owner to predict daily sales volumes based on weather data (humidity and temperature) and status of the shoe shop next door. Predictive model used - Random Forests. Please see Data.csv file for hisrotic (training data). Feel free to try different combinations of Temperature/Humidity/Shoe shop status. Enjoy :)
+
+```{r}
+
+library(shiny)
+library(shinyapps)
+library(caret)
+library(party)
+library(randomForest)
+```
+
+Reading data
+
+```{r}
+data1<-read.csv("Data.csv")
+```
+
+Training the model based on historic data using Random Forests
+```{r}
+train1<-train(Volume~Temperature+Humidity+Shop, data = data1, method="rf")
+newdata<-read.csv("newdata.csv")
+```
+
+Creating Shiny Server file
+
+```{r}
+shinyServer(
+  function(input,output){
+    predicted<-reactive({
+      output$inputValue<-renderPrint({input$Humidity})
+      output$inputValue<-renderPrint({input$Temperature})
+      output$inputValue<-renderPrint({input$ShopStatus})
+      newdata$Temperature<-input$Temperature
+      newdata$Humidity<-input$Humidity
+      newdata$Shop<-input$Shop
+      predict(train1, newdata=newdata)
+    })
+      output$Prediction<-renderPrint({paste(predicted())})
+  }
+)
+```

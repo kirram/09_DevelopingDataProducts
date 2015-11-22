@@ -1,0 +1,18 @@
+{
+    "contents" : "---\ntitle: \"Developing Data Products\"\nauthor: \"Kirram\"\ndate: \"November 21, 2015\"\noutput: html_document\n---\n\n```{r}\nlibrary(shiny)\nlibrary(shinyapps)\nlibrary(caret)\nlibrary(party)\nlibrary(randomForest)\nshinyUI(pageWithSidebar(\n  headerPanel(\"Sales volume prediction\"),\n  sidebarPanel(\n    h4('Disclaimer: this model was made up and does not repredsent real trends. The fields below allow a business owner to predict daily sales volumes based on weather data and status of the shoe shop next door. Feel free to try different combinations of Temperature/Humidity/Shoe shop status'),\n    numericInput(\"Humidity\", 'Humidity, %',0,min = 35, max=100,step=1),\n    numericInput(\"Temperature\", 'Temperature, Celsius', 0 , min = 11, max=30,step=1),\n    selectInput(\"Shop\", label = \"Shop\", choices = list(\"Open\", \"Closed\")),\n    submitButton('Submit')\n  ),\n  \n  mainPanel(\n    h3('Based on weather forecast and shoe shop status, predicted volume of units sold for tomorrow is'),\n    verbatimTextOutput('Prediction')\n  )\n))\n\n```\n\n",
+    "created" : 1448211249021.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1440899825",
+    "id" : "6A2AF76F",
+    "lastKnownWriteTime" : 1448211704,
+    "path" : "~/GitHub/09_DevelopingDataProducts/uir.Rmd",
+    "project_path" : "uir.Rmd",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "type" : "r_markdown"
+}

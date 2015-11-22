@@ -1,0 +1,18 @@
+{
+    "contents" : "---\ntitle: \"Developing Data Products\"\nauthor: \"Kirram\"\ndate: \"November 21, 2015\"\noutput: html_document\n---\nDisclaimer: this model was made up and does not repredsent real trends. \n\nThe fields in the  allow a business owner to predict daily sales volumes based on weather data (humidity and temperature) and status of the shoe shop next door. Predictive model used - Random Forests. Please see Data.csv file for hisrotic (training data). Feel free to try different combinations of Temperature/Humidity/Shoe shop status. Enjoy :)\n\n```{r}\n\nlibrary(shiny)\nlibrary(shinyapps)\nlibrary(caret)\nlibrary(party)\nlibrary(randomForest)\n```\n\nReading data\n\n```{r}\ndata1<-read.csv(\"Data.csv\")\n```\n\nTraining the model based on historic data using Random Forests\n```{r}\ntrain1<-train(Volume~Temperature+Humidity+Shop, data = data1, method=\"rf\")\nnewdata<-read.csv(\"newdata.csv\")\n```\n\nCreating Shiny Server file\n\n```{r}\nshinyServer(\n  function(input,output){\n    predicted<-reactive({\n      output$inputValue<-renderPrint({input$Humidity})\n      output$inputValue<-renderPrint({input$Temperature})\n      output$inputValue<-renderPrint({input$ShopStatus})\n      newdata$Temperature<-input$Temperature\n      newdata$Humidity<-input$Humidity\n      newdata$Shop<-input$Shop\n      predict(train1, newdata=newdata)\n    })\n      output$Prediction<-renderPrint({paste(predicted())})\n  }\n)\n```\n",
+    "created" : 1448211386776.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "914033066",
+    "id" : "5C9EB4FE",
+    "lastKnownWriteTime" : 1448211856,
+    "path" : "~/GitHub/09_DevelopingDataProducts/serverr.Rmd",
+    "project_path" : "serverr.Rmd",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "type" : "r_markdown"
+}
